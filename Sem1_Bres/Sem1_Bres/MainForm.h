@@ -42,6 +42,8 @@ namespace Sem1_Bres {
 
 	private: System::Windows::Forms::Button^  clearBtn;
 	private: System::Windows::Forms::Button^  paintLineBtn;
+	private: System::Windows::Forms::Button^  paintCircleBtn;
+
 
 	private:
 		/// <summary>
@@ -61,6 +63,7 @@ namespace Sem1_Bres {
 			this->graphBox = (gcnew System::Windows::Forms::PictureBox());
 			this->clearBtn = (gcnew System::Windows::Forms::Button());
 			this->paintLineBtn = (gcnew System::Windows::Forms::Button());
+			this->paintCircleBtn = (gcnew System::Windows::Forms::Button());
 			this->menuStrip1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->graphBox))->BeginInit();
 			this->SuspendLayout();
@@ -93,7 +96,7 @@ namespace Sem1_Bres {
 			// 
 			// clearBtn
 			// 
-			this->clearBtn->Location = System::Drawing::Point(544, 243);
+			this->clearBtn->Location = System::Drawing::Point(544, 211);
 			this->clearBtn->Name = L"clearBtn";
 			this->clearBtn->Size = System::Drawing::Size(165, 43);
 			this->clearBtn->TabIndex = 3;
@@ -111,11 +114,22 @@ namespace Sem1_Bres {
 			this->paintLineBtn->UseVisualStyleBackColor = true;
 			this->paintLineBtn->Click += gcnew System::EventHandler(this, &MainForm::paintLineBtn_Click);
 			// 
+			// paintCircleBtn
+			// 
+			this->paintCircleBtn->Location = System::Drawing::Point(544, 134);
+			this->paintCircleBtn->Name = L"paintCircleBtn";
+			this->paintCircleBtn->Size = System::Drawing::Size(165, 43);
+			this->paintCircleBtn->TabIndex = 5;
+			this->paintCircleBtn->Text = L"Нарисовать окружность";
+			this->paintCircleBtn->UseVisualStyleBackColor = true;
+			this->paintCircleBtn->Click += gcnew System::EventHandler(this, &MainForm::paintCircleBtn_Click);
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
 			this->AutoScaleMode = System::Windows::Forms::AutoScaleMode::Font;
 			this->ClientSize = System::Drawing::Size(777, 472);
+			this->Controls->Add(this->paintCircleBtn);
 			this->Controls->Add(this->paintLineBtn);
 			this->Controls->Add(this->clearBtn);
 			this->Controls->Add(this->graphBox);
@@ -135,5 +149,6 @@ namespace Sem1_Bres {
 		System::Void clearBtn_Click(System::Object^  sender, System::EventArgs^ e);
 		System::Void aboutProgramMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 		System::Void paintLineBtn_Click(System::Object^  sender, System::EventArgs^  e);
+		System::Void paintCircleBtn_Click(System::Object^  sender, System::EventArgs^  e);
 };
 }
