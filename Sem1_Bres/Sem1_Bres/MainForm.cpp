@@ -7,6 +7,12 @@
  */
 using namespace Sem1_Bres;
 
+enum Figure { LINE, CIRCLE, ELLIPSE };
+boolean mousePressed = false;
+Figure figure;
+int xDown;
+int yDown;
+
 /*
 Обмен целочисленных значений
 */
@@ -29,44 +35,120 @@ System::Void MainForm::clearBtn_Click(System::Object^ sender, System::EventArgs^
 Рисование отрезка с помощью алгоритма Брезенхема
 */
 System::Void MainForm::paintLineBtn_Click(System::Object^ sender, System::EventArgs^ e){
+	figure = LINE;
+}
+
+/*
+Рисование окружности с помощью алгоритма Брезенхема
+*/
+System::Void MainForm::paintCircleBtn_Click(System::Object^ sender, System::EventArgs^ e){
+	figure = CIRCLE;
+}
+
+/*
+Рисование эллипса с помощью алгоритма Брезенхема
+*/
+System::Void MainForm::paintEllipseBtn_Click(System::Object^  sender, System::EventArgs^  e){
+	figure = ELLIPSE;
+}
+
+/**
+ * Обрабатываем случай, когда мышь нажата
+ */
+System::Void MainForm::graphBox_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
+{
+	mousePressed = true;
+	xDown = e->X;
+	yDown = e->Y;
+}
+
+/**
+* Обрабатываем случай, когда мышь отпущена
+*/
+System::Void MainForm::graphBox_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
+{
+	if (mousePressed)
+	{
+		int xUp = e->X;
+		int yUp = e->Y;
+		switch (figure)
+		{
+		case LINE:
+			drawLine(xUp, yUp);
+			break;
+		case CIRCLE:
+			drawCircle(xUp, yUp);
+			break;
+		case ELLIPSE:
+			drawEllipse(xUp, yUp);
+			break;
+		default:
+			break;
+		}
+	}
+	mousePressed = false;
+}
+
+/*
+Информация о программе
+*/
+System::Void MainForm::aboutProgramMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
+	MessageBox::Show(
+		"Реализация алгоритма Брезенхема для отрезка, окружности и эллипса\n" +
+		"© Разработка: Ярных Роман, студент БПИ141(2), 2017"
+		);
+}
+
+/*
+* Выбор цвета линии 
+*/
+System::Void MainForm::selectColorBtn_Click(System::Object^ sender, System::EventArgs^ e){
+	color = Color::Black;
+	if (colorDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+	{
+		color = colorDialog->Color;
+	}
+}
+
+/*
+ * Рисование линии
+ */
+System::Void MainForm::drawLine(int xUp, int yUp)
+{
 	Graphics ^g = graphBox->CreateGraphics();
-	Color col = lineColor;
-	int x;
-	int y;
-	int x1;
-	int y1;
-	try {
-		x = Int32::Parse(x1Input->Text); //x1
-		y = Int32::Parse(y1Input->Text); //y1
-		x1 = Int32::Parse(x2Input->Text); //x2
-		y1 = Int32::Parse(y2Input->Text); //y2
-	}
-	catch (FormatException ^e) {
-		MessageBox::Show("Неправильный ввод чисел!");
-		return;
-	}
+	int x = xDown;
+	int y = yDown;
+	int x1 = xUp;
+	int y1 = yUp;
 	int dx = Math::Abs(x1 - x);
 	int dy = Math::Abs(y1 - y);
 	int s1 = Math::Sign(x1 - x);
 	int s2 = Math::Sign(y1 - y);
-	int pixelSize = 3;
+	int pixelSize = 2;
 	int err = 0;
 	int wasSwap = false;
-	Brush ^brush = gcnew SolidBrush(lineColor);
-	if (dy < dx){
+	Brush ^brush = gcnew SolidBrush(color);
+	//если прирост по y больше, чем по x, то меняем прирост местами
+	if (dy > dx){
 		Swap(dx, dy);
 		wasSwap = true;
 	}
 	err = 2 * dy - dx;
+	//идем по горизонтали до конца отрезка
 	for (int i = 1; i <= dx; i++){
 		g->FillRectangle(brush, x, y, pixelSize, pixelSize);
+		//если начало и конец совпадают, то остановка
 		if (x == x1 && y == y1)
 			break;
+		//
 		while (err >= 0){
+			//если прирост по x был больше, то идем по x
 			if (wasSwap)
 				x += s1;
+			//идем по y
 			else
 				y += s2;
+			//считаем ошибку
 			err = err - (dx << 1);
 		}
 		if (wasSwap)
@@ -78,29 +160,23 @@ System::Void MainForm::paintLineBtn_Click(System::Object^ sender, System::EventA
 }
 
 /*
-Рисование окружности с помощью алгоритма Брезенхема
+* Рисование окружности
 */
-System::Void MainForm::paintCircleBtn_Click(System::Object^ sender, System::EventArgs^ e){
+System::Void MainForm::drawCircle(int xUp, int yUp)
+{
 	Graphics ^g = graphBox->CreateGraphics();
 	Color ^col = gcnew Color();
-	int xc = 200;
-	int yc = 100;
-	int r = 80;
-	try {
-		xc = Int32::Parse(circleXCenterInput->Text);
-		yc = Int32::Parse(circleYCenterInput->Text);
-		r = Int32::Parse(circleRadiusInput->Text);
-	}
-	catch (FormatException ^e) {
-		MessageBox::Show("Неправильный ввод числа!");
-		return;
-	}
+	int xc = xDown;
+	int yc = yDown;
+	int dx = Math::Abs(xUp - xc);
+	int dy = Math::Abs(yUp - yc);
+	int r = (int) Math::Floor(Math::Sqrt(dx * dx + dy * dy));
 	int x = 0;
 	int y = r;
 	int d = 2 - 2 * r;
 	int err = 0;
-	Brush ^brush = gcnew SolidBrush(circleColor);
-	int pixelSize = 2;
+	Brush ^brush = gcnew SolidBrush(color);
+	int pixelSize = 1;
 	while (y >= 0){
 		//1 четверть
 		g->FillRectangle(brush, xc + x, yc + y, pixelSize, pixelSize);
@@ -111,16 +187,19 @@ System::Void MainForm::paintCircleBtn_Click(System::Object^ sender, System::Even
 		//4 четверть
 		g->FillRectangle(brush, xc - x, yc - y, pixelSize, pixelSize);
 		err = 2 * (d + y) - 1;
+		//горизонтальный шаг
 		if (d < 0 && err <= 0){
 			x++;
 			d += 2 * x + 1;
 			continue;
 		}
+		//вертикальный шаг
 		if (d > 0 && err > 0){
 			y--;
 			d -= 2 * y + 1;
 			continue;
 		}
+		//диагональный шаг
 		x++;
 		d += 2 * (x - y);
 		y--;
@@ -139,107 +218,59 @@ void DrawEllipsePart(Graphics ^g, Brush^ brush, int xc, int yc, int x, int y, in
 }
 
 /*
-Рисование эллипса с помощью алгоритма Брезенхема
+* Рисование эллипса
 */
-System::Void MainForm::paintEllipseBtn_Click(System::Object^  sender, System::EventArgs^  e){
+System::Void MainForm::drawEllipse(int xUp, int yUp)
+{
 	Graphics ^g = graphBox->CreateGraphics();
 	Color ^col = gcnew Color();
-	Brush ^brush = gcnew SolidBrush(ellipseColor);
-	int pixelSize = 2;
-	int xc;
-	int yc;
-	int a;
-	int b;
-	try {
-		xc = Int32::Parse(ellipseXCenterInput->Text);
-		yc = Int32::Parse(ellipseXCenterInput->Text);
-		a = Int32::Parse(aInput->Text);
-		b = Int32::Parse(bInput->Text);
-	}
-	catch (FormatException ^e) {
-		MessageBox::Show("Неправильный формат чисел!");
-	}
-	int x = 0; 
-	int y = b; 
+	Brush ^brush = gcnew SolidBrush(color);
+	int pixelSize = 1;
+	int xc = xDown;
+	int yc = yDown;
+	int a = Math::Abs(xUp - xc);
+	int b = Math::Abs(yUp - yc);
+	int x = 0;
+	int y = b;
 	int a_sqr = a * a; // a^2, a - большая полуось
 	int b_sqr = b * b; // b^2, b - малая полуось
 	int d = 4 * b_sqr * ((x + 1) * (x + 1)) + a_sqr * ((2 * y - 1) * (2 * y - 1)) - 4 * a_sqr * b_sqr; // Функция координат точки (x+1, y-1/2)
+	//первая дуга (длинная)
 	while (a_sqr * (2 * y - 1) > 2 * b_sqr * (x + 1))
 	{
 		DrawEllipsePart(g, brush, xc, yc, x, y, pixelSize);
-		if (d < 0) 
+		//(x+1, y) горизонтальный шаг
+		if (d < 0)
 		{
 			x++;
 			d += 4 * b_sqr * (2 * x + 3);
 		}
-		else 
+		//(x+1, y-1) диагональный шаг
+		else
 		{
 			x++;
 			d = d - 8 * a_sqr * (y - 1) + 4 * b_sqr * (2 * x + 3);
 			y--;
 		}
 	}
-	d = b_sqr * ((2 * x + 1) * (2 * x + 1)) + 4 * a_sqr * ((y + 1) * (y + 1)) - 4 * a_sqr * b_sqr; 
-	while (y + 1 != 0) 
+	d = b_sqr * ((2 * x + 1) * (2 * x + 1)) + 4 * a_sqr * ((y + 1) * (y + 1)) - 4 * a_sqr * b_sqr;
+	//вторая дуга (короткая)
+	while (y + 1 != 0)
 	{
 		DrawEllipsePart(g, brush, xc, yc, x, y, pixelSize);
-		if (d < 0) 
+		//(x, y--) вертикальный шаг
+		if (d < 0)
 		{
 			y--;
 			d += 4 * a_sqr * (2 * y + 3);
 		}
+		//(x++, y--) диагональный шаг
 		else
 		{
 			y--;
 			d = d - 8 * b_sqr * (x + 1) + 4 * a_sqr * (2 * y + 3);
 			x++;
 		}
-	}
-}
-
-/*
-Информация о программе
-*/
-System::Void MainForm::aboutProgramMenuItem_Click(System::Object^ sender, System::EventArgs^ e) {
-	MessageBox::Show(
-		"Реализация алгоритма Брезенхема для отрезка, окружности и эллипса\n" +
-		"© Разработка: Ярных Роман, студент БПИ141(2), 2017"
-		);
-}
-
-/*
- * Выбор цвета линии 
- */
-System::Void MainForm::selectLineColorBtn_Click(System::Object^ sender, System::EventArgs^ e){
-	lineColor = Color::Black;
-	if (colorDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK)
-	{
-		lineColor = colorDialog->Color;
-		lineColorInput->Text = lineColor.ToString();
-	}
-}
-
-/*
-* Выбор цвета линии окружности
-*/
-System::Void MainForm::selectCircleColorBtn_Click(System::Object^ sender, System::EventArgs^ e){
-	circleColor = Color::Black;
-	if (colorDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK)
-	{
-		circleColor = colorDialog->Color;
-		circleColorInput->Text = lineColor.ToString();
-	}
-}
-
-/*
-* Выбор цвета линии эллипса
-*/
-System::Void MainForm::selectEllipseColorBtn_Click(System::Object^ sender, System::EventArgs^ e){
-	ellipseColor = Color::Black;
-	if (colorDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK)
-	{
-		ellipseColor = colorDialog->Color;
-		ellipseColorInput->Text = lineColor.ToString();
 	}
 }
 
