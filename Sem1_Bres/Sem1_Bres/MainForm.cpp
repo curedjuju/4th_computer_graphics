@@ -9,6 +9,7 @@ using namespace Sem1_Bres;
 
 enum Figure { LINE, CIRCLE, ELLIPSE };
 boolean mousePressed = false;
+boolean colorSelected = false;
 Figure figure;
 int xDown;
 int yDown;
@@ -36,6 +37,7 @@ System::Void MainForm::clearBtn_Click(System::Object^ sender, System::EventArgs^
 */
 System::Void MainForm::paintLineBtn_Click(System::Object^ sender, System::EventArgs^ e){
 	figure = LINE;
+
 }
 
 /*
@@ -69,6 +71,11 @@ System::Void MainForm::graphBox_MouseUp(System::Object^  sender, System::Windows
 {
 	if (mousePressed)
 	{
+		if (!colorSelected)
+		{
+			MessageBox::Show("Вы не выбрали цвет!");
+			return;
+		}
 		int xUp = e->X;
 		int yUp = e->Y;
 		switch (figure)
@@ -107,6 +114,7 @@ System::Void MainForm::selectColorBtn_Click(System::Object^ sender, System::Even
 	if (colorDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK)
 	{
 		color = colorDialog->Color;
+		colorSelected = true;
 	}
 }
 
@@ -240,12 +248,14 @@ System::Void MainForm::drawEllipse(int xUp, int yUp)
 	{
 		DrawEllipsePart(g, brush, xc, yc, x, y, pixelSize);
 		//(x+1, y) горизонтальный шаг
+		//внутри эллипса
 		if (d < 0)
 		{
 			x++;
 			d += 4 * b_sqr * (2 * x + 3);
 		}
 		//(x+1, y-1) диагональный шаг
+		//вне эллипса
 		else
 		{
 			x++;
@@ -259,12 +269,14 @@ System::Void MainForm::drawEllipse(int xUp, int yUp)
 	{
 		DrawEllipsePart(g, brush, xc, yc, x, y, pixelSize);
 		//(x, y--) вертикальный шаг
+		//внутри эллипса
 		if (d < 0)
 		{
 			y--;
 			d += 4 * a_sqr * (2 * y + 3);
 		}
 		//(x++, y--) диагональный шаг
+		//вне эллипса
 		else
 		{
 			y--;
