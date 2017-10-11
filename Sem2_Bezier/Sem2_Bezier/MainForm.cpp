@@ -140,11 +140,22 @@ void drawHigherOrder(Pen^ pen, Graphics ^g, List<Point>^ points)
 
 Point calculateDeCasteljau(float t, List<Point>^ points)
 {
-	
-}
-
-Point scalarMult(float t, Point p)
-{
-	return Point(t * p.X, t * p.Y);
+	array<array<Point>^> ^b = gcnew array<array<Point>^>(points->Count);
+	int n = points->Count;
+	for (int i = 0; i < n; i++)
+	{
+		b[i] = gcnew array<Point>(n);
+	}
+	for (int i = 0; i < n; i++)
+	{
+		b[0][i] = points[i];
+	}
+	for (int j = 1; j < n; j++) {
+		for (int i = 0; i < n - j; i++) {
+			b[j][i].X = (1 - t) * b[j - 1][i].X + t * b[j - 1][i + 1].X;
+			b[j][i].Y = (1 - t) * b[j - 1][i].Y + t * b[j - 1][i + 1].Y;
+		}
+	}
+	return b[n - 1][0];
 }
 
