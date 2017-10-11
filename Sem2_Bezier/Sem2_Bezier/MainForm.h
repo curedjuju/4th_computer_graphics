@@ -45,6 +45,13 @@ namespace Sem2_Bezier {
 	private: System::Windows::Forms::Button^  dragBtn;
 
 	private: System::Windows::Forms::Button^  drawBtn;
+	private: System::Windows::Forms::ColorDialog^  colorDialog;
+
+	private: System::Windows::Forms::Button^  selectColorBtn;
+	private: System::Windows::Forms::Label^  label1;
+	private: System::Windows::Forms::TrackBar^  widthSlider;
+
+
 
 
 
@@ -65,13 +72,18 @@ namespace Sem2_Bezier {
 			this->programToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->aboutToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->selectColorBtn = (gcnew System::Windows::Forms::Button());
 			this->dragBtn = (gcnew System::Windows::Forms::Button());
 			this->drawBtn = (gcnew System::Windows::Forms::Button());
 			this->clearBtn = (gcnew System::Windows::Forms::Button());
 			this->pictureBox = (gcnew System::Windows::Forms::PictureBox());
+			this->colorDialog = (gcnew System::Windows::Forms::ColorDialog());
+			this->widthSlider = (gcnew System::Windows::Forms::TrackBar());
+			this->label1 = (gcnew System::Windows::Forms::Label());
 			this->menuStrip1->SuspendLayout();
 			this->groupBox1->SuspendLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox))->BeginInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->widthSlider))->BeginInit();
 			this->SuspendLayout();
 			// 
 			// menuStrip1
@@ -99,6 +111,9 @@ namespace Sem2_Bezier {
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->label1);
+			this->groupBox1->Controls->Add(this->widthSlider);
+			this->groupBox1->Controls->Add(this->selectColorBtn);
 			this->groupBox1->Controls->Add(this->dragBtn);
 			this->groupBox1->Controls->Add(this->drawBtn);
 			this->groupBox1->Controls->Add(this->clearBtn);
@@ -109,9 +124,19 @@ namespace Sem2_Bezier {
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Params";
 			// 
+			// selectColorBtn
+			// 
+			this->selectColorBtn->Location = System::Drawing::Point(23, 33);
+			this->selectColorBtn->Name = L"selectColorBtn";
+			this->selectColorBtn->Size = System::Drawing::Size(123, 35);
+			this->selectColorBtn->TabIndex = 3;
+			this->selectColorBtn->Text = L"Select color";
+			this->selectColorBtn->UseVisualStyleBackColor = true;
+			this->selectColorBtn->Click += gcnew System::EventHandler(this, &MainForm::selectColorBtn_Click);
+			// 
 			// dragBtn
 			// 
-			this->dragBtn->Location = System::Drawing::Point(510, 33);
+			this->dragBtn->Location = System::Drawing::Point(305, 33);
 			this->dragBtn->Name = L"dragBtn";
 			this->dragBtn->Size = System::Drawing::Size(123, 35);
 			this->dragBtn->TabIndex = 2;
@@ -121,7 +146,7 @@ namespace Sem2_Bezier {
 			// 
 			// drawBtn
 			// 
-			this->drawBtn->Location = System::Drawing::Point(362, 33);
+			this->drawBtn->Location = System::Drawing::Point(166, 33);
 			this->drawBtn->Name = L"drawBtn";
 			this->drawBtn->Size = System::Drawing::Size(123, 35);
 			this->drawBtn->TabIndex = 1;
@@ -131,7 +156,7 @@ namespace Sem2_Bezier {
 			// 
 			// clearBtn
 			// 
-			this->clearBtn->Location = System::Drawing::Point(665, 33);
+			this->clearBtn->Location = System::Drawing::Point(443, 33);
 			this->clearBtn->Name = L"clearBtn";
 			this->clearBtn->Size = System::Drawing::Size(123, 35);
 			this->clearBtn->TabIndex = 0;
@@ -152,6 +177,24 @@ namespace Sem2_Bezier {
 			this->pictureBox->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::pictureBox_MouseMove);
 			this->pictureBox->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::pictureBox_MouseUp);
 			// 
+			// widthSlider
+			// 
+			this->widthSlider->Location = System::Drawing::Point(651, 33);
+			this->widthSlider->Minimum = 1;
+			this->widthSlider->Name = L"widthSlider";
+			this->widthSlider->Size = System::Drawing::Size(153, 45);
+			this->widthSlider->TabIndex = 4;
+			this->widthSlider->Value = 1;
+			// 
+			// label1
+			// 
+			this->label1->AutoSize = true;
+			this->label1->Location = System::Drawing::Point(610, 44);
+			this->label1->Name = L"label1";
+			this->label1->Size = System::Drawing::Size(35, 13);
+			this->label1->TabIndex = 5;
+			this->label1->Text = L"Width";
+			// 
 			// MainForm
 			// 
 			this->AutoScaleDimensions = System::Drawing::SizeF(6, 13);
@@ -160,19 +203,23 @@ namespace Sem2_Bezier {
 			this->Controls->Add(this->pictureBox);
 			this->Controls->Add(this->groupBox1);
 			this->Controls->Add(this->menuStrip1);
+			this->DoubleBuffered = true;
 			this->MainMenuStrip = this->menuStrip1;
 			this->Name = L"MainForm";
 			this->Text = L"MainForm";
 			this->menuStrip1->ResumeLayout(false);
 			this->menuStrip1->PerformLayout();
 			this->groupBox1->ResumeLayout(false);
+			this->groupBox1->PerformLayout();
 			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->pictureBox))->EndInit();
+			(cli::safe_cast<System::ComponentModel::ISupportInitialize^>(this->widthSlider))->EndInit();
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
 		}
 #pragma endregion
 	private: List<Point>^ points = gcnew List<Point>();
+	private: Color color;
 	private: System::Void aboutToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void clearBtn_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void pictureBox_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
@@ -181,5 +228,6 @@ namespace Sem2_Bezier {
 	private: System::Void pictureBox_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
 	private: System::Void pictureBox_MouseMove(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
 	private: System::Void pictureBox_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
+	private: System::Void selectColorBtn_Click(System::Object^  sender, System::EventArgs^  e);
 };
 }

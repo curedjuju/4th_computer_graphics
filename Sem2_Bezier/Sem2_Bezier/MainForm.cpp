@@ -14,6 +14,8 @@ void drawQubic(Pen^ pen, Graphics ^g, List<Point>^ points);
 void drawHigherOrder(Pen^ pen, Graphics ^g, List<Point>^ points);
 Point calculateDeCasteljau(float t, List<Point>^ points);
 int chosenPointIndex;
+bool colorSelected = true;
+Point pPrev;
 
 bool draggedEnabled = false;
 bool mousePressed = false;
@@ -55,6 +57,15 @@ System::Void MainForm::clearBtn_Click(System::Object^  sender, System::EventArgs
 	points->Clear();
 }
 
+System::Void MainForm::selectColorBtn_Click(System::Object^ sender, System::EventArgs^ e){
+	color = Color::Black;
+	if (colorDialog->ShowDialog() == System::Windows::Forms::DialogResult::OK)
+	{
+		color = colorDialog->Color;
+		colorSelected = true;
+	}
+}
+
 System::Void MainForm::pictureBox_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
 {
 	if (draggedEnabled)
@@ -63,12 +74,12 @@ System::Void MainForm::pictureBox_MouseClick(System::Object^  sender, System::Wi
 	Graphics ^g = pictureBox->CreateGraphics();
 	Color ^col = gcnew Color;
 	Brush ^brush = gcnew SolidBrush(col->Red);
-	Brush ^curveBrush = gcnew SolidBrush(col->Blue);
+	Brush ^curveBrush = gcnew SolidBrush(color);
 	Pen ^pen = gcnew Pen(brush);
-	Pen ^curvePen = gcnew Pen(curveBrush);
+	Pen ^curvePen = gcnew Pen(curveBrush, widthSlider->Value);
 	g->Clear(col->White);
-	Point pPrev = Point(0, 0);
 	int i = -1;
+	pPrev = Point(0, 0);
 	for each (Point p in points)
 	{
 		g->FillEllipse(brush, p.X - RADIUS / 2, p.Y - RADIUS / 2, RADIUS, RADIUS);
@@ -77,9 +88,9 @@ System::Void MainForm::pictureBox_MouseClick(System::Object^  sender, System::Wi
 			continue;
 		}
 		g->DrawLine(pen, pPrev, p);
-		drawBezierCurve(curvePen, g, points);
 		pPrev = p;
 	}
+	drawBezierCurve(curvePen, g, points);
 }
 
 System::Void MainForm::pictureBox_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
@@ -105,9 +116,9 @@ System::Void MainForm::pictureBox_MouseMove(System::Object^  sender, System::Win
 	Graphics ^g = pictureBox->CreateGraphics();
 	Color ^col = gcnew Color;
 	Brush ^brush = gcnew SolidBrush(col->Red);
-	Brush ^curveBrush = gcnew SolidBrush(col->Blue);
+	Brush ^curveBrush = gcnew SolidBrush(color);
 	Pen ^pen = gcnew Pen(brush);
-	Pen ^curvePen = gcnew Pen(curveBrush);
+	Pen ^curvePen = gcnew Pen(curveBrush, widthSlider->Value);
 	g->Clear(col->White);
 	Point pPrev = Point(0, 0);
 	points[chosenPointIndex] = e->Location;
@@ -120,9 +131,9 @@ System::Void MainForm::pictureBox_MouseMove(System::Object^  sender, System::Win
 			continue;
 		}
 		g->DrawLine(pen, pPrev, p);
-		drawBezierCurve(curvePen, g, points);
 		pPrev = p;
 	}
+	drawBezierCurve(curvePen, g, points);
 }
 
 System::Void MainForm::pictureBox_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
