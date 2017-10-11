@@ -42,6 +42,10 @@ namespace Sem2_Bezier {
 	private: System::Windows::Forms::GroupBox^  groupBox1;
 	private: System::Windows::Forms::PictureBox^  pictureBox;
 	private: System::Windows::Forms::Button^  clearBtn;
+	private: System::Windows::Forms::Button^  dragBtn;
+
+	private: System::Windows::Forms::Button^  drawBtn;
+
 
 
 	private:
@@ -61,6 +65,8 @@ namespace Sem2_Bezier {
 			this->programToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->aboutToolStripMenuItem = (gcnew System::Windows::Forms::ToolStripMenuItem());
 			this->groupBox1 = (gcnew System::Windows::Forms::GroupBox());
+			this->dragBtn = (gcnew System::Windows::Forms::Button());
+			this->drawBtn = (gcnew System::Windows::Forms::Button());
 			this->clearBtn = (gcnew System::Windows::Forms::Button());
 			this->pictureBox = (gcnew System::Windows::Forms::PictureBox());
 			this->menuStrip1->SuspendLayout();
@@ -93,6 +99,8 @@ namespace Sem2_Bezier {
 			// 
 			// groupBox1
 			// 
+			this->groupBox1->Controls->Add(this->dragBtn);
+			this->groupBox1->Controls->Add(this->drawBtn);
 			this->groupBox1->Controls->Add(this->clearBtn);
 			this->groupBox1->Location = System::Drawing::Point(12, 36);
 			this->groupBox1->Name = L"groupBox1";
@@ -100,6 +108,26 @@ namespace Sem2_Bezier {
 			this->groupBox1->TabIndex = 1;
 			this->groupBox1->TabStop = false;
 			this->groupBox1->Text = L"Params";
+			// 
+			// dragBtn
+			// 
+			this->dragBtn->Location = System::Drawing::Point(510, 33);
+			this->dragBtn->Name = L"dragBtn";
+			this->dragBtn->Size = System::Drawing::Size(123, 35);
+			this->dragBtn->TabIndex = 2;
+			this->dragBtn->Text = L"Drag";
+			this->dragBtn->UseVisualStyleBackColor = true;
+			this->dragBtn->Click += gcnew System::EventHandler(this, &MainForm::dragBtn_Click);
+			// 
+			// drawBtn
+			// 
+			this->drawBtn->Location = System::Drawing::Point(362, 33);
+			this->drawBtn->Name = L"drawBtn";
+			this->drawBtn->Size = System::Drawing::Size(123, 35);
+			this->drawBtn->TabIndex = 1;
+			this->drawBtn->Text = L"Draw";
+			this->drawBtn->UseVisualStyleBackColor = true;
+			this->drawBtn->Click += gcnew System::EventHandler(this, &MainForm::drawBtn_Click);
 			// 
 			// clearBtn
 			// 
@@ -120,6 +148,9 @@ namespace Sem2_Bezier {
 			this->pictureBox->TabIndex = 2;
 			this->pictureBox->TabStop = false;
 			this->pictureBox->MouseClick += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::pictureBox_MouseClick);
+			this->pictureBox->MouseDown += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::pictureBox_MouseDown);
+			this->pictureBox->MouseMove += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::pictureBox_MouseMove);
+			this->pictureBox->MouseUp += gcnew System::Windows::Forms::MouseEventHandler(this, &MainForm::pictureBox_MouseUp);
 			// 
 			// MainForm
 			// 
@@ -139,13 +170,16 @@ namespace Sem2_Bezier {
 			this->ResumeLayout(false);
 			this->PerformLayout();
 
-			points = gcnew List<Point>();
-
 		}
 #pragma endregion
 	private: List<Point>^ points = gcnew List<Point>();
 	private: System::Void aboutToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void clearBtn_Click(System::Object^  sender, System::EventArgs^  e);
 	private: System::Void pictureBox_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
+	private: System::Void drawBtn_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void dragBtn_Click(System::Object^  sender, System::EventArgs^  e);
+	private: System::Void pictureBox_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
+	private: System::Void pictureBox_MouseMove(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
+	private: System::Void pictureBox_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e);
 };
 }

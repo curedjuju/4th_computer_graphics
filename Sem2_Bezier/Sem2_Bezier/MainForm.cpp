@@ -13,6 +13,10 @@ void drawQuadratic(Pen^ pen, Graphics ^g, List<Point>^ points);
 void drawQubic(Pen^ pen, Graphics ^g, List<Point>^ points);
 void drawHigherOrder(Pen^ pen, Graphics ^g, List<Point>^ points);
 Point calculateDeCasteljau(float t, List<Point>^ points);
+int chosenPointIndex;
+
+bool draggedEnabled = false;
+bool mousePressed = false;
 
 int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
@@ -24,9 +28,23 @@ int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 
 System::Void MainForm::aboutToolStripMenuItem_Click(System::Object^  sender, System::EventArgs^  e)
 {
-	MessageBox::Show("Program for drawing Bezier curves n-order\n" +  
+	MessageBox::Show("Program for drawing Bezier curves n-order\n" +
+		"Following tasks completed:\n" +
+		"1. Drawing the simple Bezier curves until 3 order\n" + 
+		"2. Drawing the simple Bezier curves of higher orders by implementing De Casteljau algorithm" + 
+		"3. Choosing the color\n" +
 		"Developer: Yarnykh Roman, SE141 (rvyarnykh@edu.hse.ru), 2017", 
 		"Bezier curves, 2017");
+}
+
+System::Void MainForm::drawBtn_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	draggedEnabled = false;
+}
+
+System::Void MainForm::dragBtn_Click(System::Object^  sender, System::EventArgs^  e)
+{
+	draggedEnabled = true;
 }
 
 System::Void MainForm::clearBtn_Click(System::Object^  sender, System::EventArgs^  e)
@@ -39,6 +57,8 @@ System::Void MainForm::clearBtn_Click(System::Object^  sender, System::EventArgs
 
 System::Void MainForm::pictureBox_MouseClick(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
 {
+	if (draggedEnabled)
+		return;
 	points->Add(e->Location);
 	Graphics ^g = pictureBox->CreateGraphics();
 	Color ^col = gcnew Color;
@@ -62,9 +82,57 @@ System::Void MainForm::pictureBox_MouseClick(System::Object^  sender, System::Wi
 	}
 }
 
+System::Void MainForm::pictureBox_MouseDown(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
+{
+	if (!draggedEnabled || points == nullptr || points->Count == 0)
+		return;
+	Point currentPoint = e->Location;
+	for (int i = 0; i < points->Count; i++)
+	{
+		if (Math::Abs(currentPoint.X - points[i].X) <= RADIUS && Math::Abs(currentPoint.Y - points[i].Y) <= RADIUS)
+		{
+			chosenPointIndex = i;
+			mousePressed = true;
+			return;
+		}
+	}
+}
+
+System::Void MainForm::pictureBox_MouseMove(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
+{
+	if (!draggedEnabled || !mousePressed || points == nullptr || points->Count == 0)
+		return;
+	Graphics ^g = pictureBox->CreateGraphics();
+	Color ^col = gcnew Color;
+	Brush ^brush = gcnew SolidBrush(col->Red);
+	Brush ^curveBrush = gcnew SolidBrush(col->Blue);
+	Pen ^pen = gcnew Pen(brush);
+	Pen ^curvePen = gcnew Pen(curveBrush);
+	g->Clear(col->White);
+	Point pPrev = Point(0, 0);
+	points[chosenPointIndex] = e->Location;
+	int i = -1;
+	for each (Point p in points)
+	{
+		g->FillEllipse(brush, p.X - RADIUS / 2, p.Y - RADIUS / 2, RADIUS, RADIUS);
+		if (++i == 0){
+			pPrev = p;
+			continue;
+		}
+		g->DrawLine(pen, pPrev, p);
+		drawBezierCurve(curvePen, g, points);
+		pPrev = p;
+	}
+}
+
+System::Void MainForm::pictureBox_MouseUp(System::Object^  sender, System::Windows::Forms::MouseEventArgs^  e)
+{
+	mousePressed = false;
+}
+
+
 System::Void drawBezierCurve(Pen^ pen, Graphics ^g, List<Point>^ points)
 {
-	float delta = 0.01;
 	//If order belongs range 1..3
 	switch (bezierOrder(points->Count))
 	{
