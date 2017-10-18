@@ -16,10 +16,13 @@
 #include <QtWidgets/QGraphicsView>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
 #include <QtWidgets/QPushButton>
+#include <QtWidgets/QSlider>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QWidget>
 
@@ -33,6 +36,36 @@ public:
     QGraphicsView *graphicsView;
     QGroupBox *groupBox;
     QPushButton *paintBtn;
+    QLabel *label;
+    QLabel *label_2;
+    QLabel *label_3;
+    QLabel *label_4;
+    QLineEdit *x1;
+    QLineEdit *x2;
+    QLineEdit *x3;
+    QLineEdit *x4;
+    QLineEdit *y1;
+    QLineEdit *y2;
+    QLineEdit *y3;
+    QLineEdit *y4;
+    QLabel *label_5;
+    QLabel *label_6;
+    QLabel *label_7;
+    QLabel *label_8;
+    QLineEdit *z1;
+    QLineEdit *z2;
+    QLineEdit *z3;
+    QLineEdit *z4;
+    QLabel *label_9;
+    QLabel *label_10;
+    QLabel *label_11;
+    QLabel *label_12;
+    QLabel *label_13;
+    QLabel *label_14;
+    QLabel *label_15;
+    QSlider *rotateX;
+    QSlider *rotateY;
+    QSlider *rotateZ;
     QMenuBar *menuBar;
     QMenu *menuProgram;
     QStatusBar *statusBar;
@@ -54,7 +87,101 @@ public:
         groupBox->setGeometry(QRect(610, 0, 391, 551));
         paintBtn = new QPushButton(groupBox);
         paintBtn->setObjectName(QStringLiteral("paintBtn"));
-        paintBtn->setGeometry(QRect(150, 460, 111, 31));
+        paintBtn->setGeometry(QRect(150, 490, 111, 31));
+        label = new QLabel(groupBox);
+        label->setObjectName(QStringLiteral("label"));
+        label->setGeometry(QRect(30, 50, 61, 16));
+        label_2 = new QLabel(groupBox);
+        label_2->setObjectName(QStringLiteral("label_2"));
+        label_2->setGeometry(QRect(30, 110, 61, 16));
+        label_3 = new QLabel(groupBox);
+        label_3->setObjectName(QStringLiteral("label_3"));
+        label_3->setGeometry(QRect(30, 170, 61, 16));
+        label_4 = new QLabel(groupBox);
+        label_4->setObjectName(QStringLiteral("label_4"));
+        label_4->setGeometry(QRect(30, 220, 61, 16));
+        x1 = new QLineEdit(groupBox);
+        x1->setObjectName(QStringLiteral("x1"));
+        x1->setGeometry(QRect(30, 70, 61, 21));
+        x2 = new QLineEdit(groupBox);
+        x2->setObjectName(QStringLiteral("x2"));
+        x2->setGeometry(QRect(30, 130, 61, 21));
+        x3 = new QLineEdit(groupBox);
+        x3->setObjectName(QStringLiteral("x3"));
+        x3->setGeometry(QRect(30, 190, 61, 21));
+        x4 = new QLineEdit(groupBox);
+        x4->setObjectName(QStringLiteral("x4"));
+        x4->setGeometry(QRect(30, 250, 61, 21));
+        y1 = new QLineEdit(groupBox);
+        y1->setObjectName(QStringLiteral("y1"));
+        y1->setGeometry(QRect(120, 70, 61, 21));
+        y2 = new QLineEdit(groupBox);
+        y2->setObjectName(QStringLiteral("y2"));
+        y2->setGeometry(QRect(120, 130, 61, 21));
+        y3 = new QLineEdit(groupBox);
+        y3->setObjectName(QStringLiteral("y3"));
+        y3->setGeometry(QRect(120, 190, 61, 21));
+        y4 = new QLineEdit(groupBox);
+        y4->setObjectName(QStringLiteral("y4"));
+        y4->setGeometry(QRect(120, 250, 61, 21));
+        label_5 = new QLabel(groupBox);
+        label_5->setObjectName(QStringLiteral("label_5"));
+        label_5->setGeometry(QRect(120, 50, 61, 16));
+        label_6 = new QLabel(groupBox);
+        label_6->setObjectName(QStringLiteral("label_6"));
+        label_6->setGeometry(QRect(120, 110, 61, 16));
+        label_7 = new QLabel(groupBox);
+        label_7->setObjectName(QStringLiteral("label_7"));
+        label_7->setGeometry(QRect(120, 170, 61, 16));
+        label_8 = new QLabel(groupBox);
+        label_8->setObjectName(QStringLiteral("label_8"));
+        label_8->setGeometry(QRect(120, 230, 61, 16));
+        z1 = new QLineEdit(groupBox);
+        z1->setObjectName(QStringLiteral("z1"));
+        z1->setGeometry(QRect(210, 70, 61, 21));
+        z2 = new QLineEdit(groupBox);
+        z2->setObjectName(QStringLiteral("z2"));
+        z2->setGeometry(QRect(210, 130, 61, 21));
+        z3 = new QLineEdit(groupBox);
+        z3->setObjectName(QStringLiteral("z3"));
+        z3->setGeometry(QRect(210, 190, 61, 21));
+        z4 = new QLineEdit(groupBox);
+        z4->setObjectName(QStringLiteral("z4"));
+        z4->setGeometry(QRect(210, 250, 61, 21));
+        label_9 = new QLabel(groupBox);
+        label_9->setObjectName(QStringLiteral("label_9"));
+        label_9->setGeometry(QRect(210, 50, 61, 16));
+        label_10 = new QLabel(groupBox);
+        label_10->setObjectName(QStringLiteral("label_10"));
+        label_10->setGeometry(QRect(210, 110, 61, 16));
+        label_11 = new QLabel(groupBox);
+        label_11->setObjectName(QStringLiteral("label_11"));
+        label_11->setGeometry(QRect(210, 170, 61, 16));
+        label_12 = new QLabel(groupBox);
+        label_12->setObjectName(QStringLiteral("label_12"));
+        label_12->setGeometry(QRect(210, 230, 61, 16));
+        label_13 = new QLabel(groupBox);
+        label_13->setObjectName(QStringLiteral("label_13"));
+        label_13->setGeometry(QRect(30, 320, 81, 16));
+        label_14 = new QLabel(groupBox);
+        label_14->setObjectName(QStringLiteral("label_14"));
+        label_14->setGeometry(QRect(30, 350, 81, 16));
+        label_15 = new QLabel(groupBox);
+        label_15->setObjectName(QStringLiteral("label_15"));
+        label_15->setGeometry(QRect(30, 380, 81, 16));
+        rotateX = new QSlider(groupBox);
+        rotateX->setObjectName(QStringLiteral("rotateX"));
+        rotateX->setGeometry(QRect(110, 320, 160, 16));
+        rotateX->setMaximum(100);
+        rotateX->setOrientation(Qt::Horizontal);
+        rotateY = new QSlider(groupBox);
+        rotateY->setObjectName(QStringLiteral("rotateY"));
+        rotateY->setGeometry(QRect(110, 350, 160, 16));
+        rotateY->setOrientation(Qt::Horizontal);
+        rotateZ = new QSlider(groupBox);
+        rotateZ->setObjectName(QStringLiteral("rotateZ"));
+        rotateZ->setGeometry(QRect(110, 380, 160, 16));
+        rotateZ->setOrientation(Qt::Horizontal);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -81,6 +208,21 @@ public:
         actionAbout->setText(QApplication::translate("MainWindow", "&About", 0));
         groupBox->setTitle(QApplication::translate("MainWindow", "\320\237\320\260\321\200\320\260\320\274\320\265\321\202\321\200\321\213 \321\200\320\270\321\201\320\276\320\262\320\260\320\275\320\270\321\217", 0));
         paintBtn->setText(QApplication::translate("MainWindow", "\320\235\320\260\321\200\320\270\321\201\320\276\320\262\320\260\321\202\321\214", 0));
+        label->setText(QApplication::translate("MainWindow", "x1", 0));
+        label_2->setText(QApplication::translate("MainWindow", "x2", 0));
+        label_3->setText(QApplication::translate("MainWindow", "x3", 0));
+        label_4->setText(QApplication::translate("MainWindow", "x4", 0));
+        label_5->setText(QApplication::translate("MainWindow", "y1", 0));
+        label_6->setText(QApplication::translate("MainWindow", "y2", 0));
+        label_7->setText(QApplication::translate("MainWindow", "y3", 0));
+        label_8->setText(QApplication::translate("MainWindow", "y4", 0));
+        label_9->setText(QApplication::translate("MainWindow", "z1", 0));
+        label_10->setText(QApplication::translate("MainWindow", "z2", 0));
+        label_11->setText(QApplication::translate("MainWindow", "z3", 0));
+        label_12->setText(QApplication::translate("MainWindow", "z4", 0));
+        label_13->setText(QApplication::translate("MainWindow", "\320\237\320\276\320\262\320\276\321\200\320\276\321\202 x", 0));
+        label_14->setText(QApplication::translate("MainWindow", "\320\237\320\276\320\262\320\276\321\200\320\276\321\202 y", 0));
+        label_15->setText(QApplication::translate("MainWindow", "\320\237\320\276\320\262\320\276\321\200\320\276\321\202 z", 0));
         menuProgram->setTitle(QApplication::translate("MainWindow", "Program", 0));
     } // retranslateUi
 

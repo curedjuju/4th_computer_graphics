@@ -11,15 +11,21 @@ Pyramid::Pyramid(QVector<QVector3D> v)
 }
 
 void Pyramid::rotateX(double alpha){
-
+    matrix = rotationXMatrix(alpha) * matrix;
 }
 
 void Pyramid::rotateY(double alpha){
-
+    matrix = rotationYMatrix(alpha) * matrix;
 }
 
 void Pyramid::rotateZ(double alpha){
+    matrix = rotationZMatrix(alpha) * matrix;
+}
 
+void Pyramid::rotate(double aX, double aY, double aZ){
+    rotateX(aX);
+    rotateY(aY);
+    rotateZ(aZ);
 }
 
 QVector<QVector2D> Pyramid::parallelProject(){
@@ -35,6 +41,57 @@ QVector<QVector2D> Pyramid::parallelProject(){
 
 QVector<QVector3D> Pyramid::figure3D(){
     return this->figure;
+}
+
+QGenericMatrix<3, 3, qreal> Pyramid::rotationXMatrix(double phi){
+    QGenericMatrix<3, 3, qreal> projMatrix;
+    //first row x
+    projMatrix(0, 0) = 1;
+    projMatrix(1, 0) = 0;
+    projMatrix(2, 0) = 0;
+    //second row y
+    projMatrix(0, 1) = 0;
+    projMatrix(1, 1) = cos(phi);
+    projMatrix(2, 1) = -sin(phi);
+    //third row z - drop
+    projMatrix(0, 2) = 0;
+    projMatrix(1, 2) = sin(phi);
+    projMatrix(2, 2) = cos(phi);
+    return projMatrix;
+}
+
+QGenericMatrix<3, 3, qreal> Pyramid::rotationYMatrix(double phi){
+    QGenericMatrix<3, 3, qreal> projMatrix;
+    //first row x
+    projMatrix(0, 0) = cos(phi);
+    projMatrix(1, 0) = 0;
+    projMatrix(2, 0) = sin(phi);
+    //second row y
+    projMatrix(0, 1) = 0;
+    projMatrix(1, 1) = 1;
+    projMatrix(2, 1) = 0;
+    //third row z - drop
+    projMatrix(0, 2) = -sin(phi);
+    projMatrix(1, 2) = 0;
+    projMatrix(2, 2) = cos(phi);
+    return projMatrix;
+}
+
+QGenericMatrix<3, 3, qreal> Pyramid::rotationZMatrix(double phi){
+    QGenericMatrix<3, 3, qreal> projMatrix;
+    //first row x
+    projMatrix(0, 0) = cos(phi);
+    projMatrix(1, 0) = -sin(phi);
+    projMatrix(2, 0) = 0;
+    //second row y
+    projMatrix(0, 1) = sin(phi);
+    projMatrix(1, 1) = cos(phi);
+    projMatrix(2, 1) = 0;
+    //third row z - drop
+    projMatrix(0, 2) = 0;
+    projMatrix(1, 2) = 0;
+    projMatrix(2, 2) = 1;
+    return projMatrix;
 }
 
 QGenericMatrix<3, 3, qreal> Pyramid::parallelProjectionMatrix(){

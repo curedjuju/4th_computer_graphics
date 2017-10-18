@@ -5,6 +5,7 @@
 #include <QVector3D>
 #include <QVector2D>
 #include <QGenericMatrix>>
+#include <math.h>
 
 const int V_COUNT = 4;
 
@@ -16,12 +17,16 @@ public:
     void rotateX(double alpha);
     void rotateY(double alpha);
     void rotateZ(double alpha);
+    void rotate(double phiX, double phiY, double phiZ);
     QVector<QVector3D> figure3D();
     QVector<QVector2D> parallelProject();
 private:
     QVector<QVector3D> figure;
     QGenericMatrix<V_COUNT, 3, qreal> matrix;
 private:
+    QGenericMatrix<3, 3, qreal> rotationXMatrix(double phi);
+    QGenericMatrix<3, 3, qreal> rotationYMatrix(double phi);
+    QGenericMatrix<3, 3, qreal> rotationZMatrix(double phi);
     QGenericMatrix<3, 3, qreal> parallelProjectionMatrix();
 };
 

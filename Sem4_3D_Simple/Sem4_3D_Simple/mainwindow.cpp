@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include "ui_mainwindow.h"
+#include <math.h>
 
 MainWindow::MainWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -27,6 +28,7 @@ void MainWindow::aboutMenuItemClicked(){
 }
 
 void MainWindow::paintBtnClicked(){
+    this->scene->clear();
     QPen pen(Qt::green);
     QPen vPen(Qt::black);
     QVector<QVector3D> v;
@@ -46,6 +48,10 @@ void MainWindow::paintBtnClicked(){
     this->scene->addLine(ui->graphicsView->width() / 2, 0, ui->graphicsView->width() / 2, ui->graphicsView->height(), pen);
 
     Pyramid pyramid(v);
+    double aX = ui->rotateX->value() / 200.0 * 3.1459;
+    double aY = ui->rotateY->value() / 200.0 * 3.1459;
+    double aZ = ui->rotateZ->value() / 200.0 * 3.1459;
+    pyramid.rotate(aX, aY, aZ);
     QVector<QVector2D> fig2d = pyramid.parallelProject();
     QVector2D point1 = fig2d.at(0);
     QVector2D point2 = fig2d.at(1);
