@@ -32,6 +32,22 @@ void Pyramid::scale(double a, double b, double c){
     matrix = scaleMatrix(a, b, c) * matrix;
 }
 
+void Pyramid::translate(double dx, double dy, double dz){
+    QGenericMatrix<4, 4, qreal> m4;
+    for(int i = 0; i < V_COUNT; i++){
+        m4(0, i) = matrix(0, i);
+        m4(1, i) = matrix(1, i);
+        m4(2, i) = matrix(2, i);
+        m4(3, i) = 1;
+    }
+    m4 = translationMatrix(dx, dy, dz).transposed() * m4;
+    for(int i = 0; i < V_COUNT; i++){
+        matrix(0, i) = m4(0, i);
+        matrix(1, i) = m4(1, i);
+        matrix(2, i) = m4(2, i);
+    }
+}
+
 QGenericMatrix<3, 3, qreal> Pyramid::scaleMatrix(double a, double b, double c){
     QGenericMatrix<3, 3, qreal> projMatrix;
     //first row x
@@ -46,6 +62,31 @@ QGenericMatrix<3, 3, qreal> Pyramid::scaleMatrix(double a, double b, double c){
     projMatrix(0, 2) = 0;
     projMatrix(1, 2) = 0;
     projMatrix(2, 2) = c;
+    return projMatrix;
+}
+
+QGenericMatrix<4, 4, qreal> Pyramid::translationMatrix(double dx, double dy, double dz){
+    QGenericMatrix<4, 4, qreal> projMatrix;
+    //first row x
+    projMatrix(0, 0) = 1;
+    projMatrix(1, 0) = 0;
+    projMatrix(2, 0) = 0;
+    projMatrix(3, 0) = dx;
+    //second row y
+    projMatrix(0, 1) = 0;
+    projMatrix(1, 1) = 1;
+    projMatrix(2, 1) = 0;
+    projMatrix(3, 1) = dy;
+    //third row z - drop
+    projMatrix(0, 2) = 0;
+    projMatrix(1, 2) = 0;
+    projMatrix(2, 2) = 1;
+    projMatrix(3, 2) = dz;
+    //
+    projMatrix(0, 3) = 0;
+    projMatrix(1, 3) = 0;
+    projMatrix(2, 3) = 0;
+    projMatrix(3, 3) = 1;
     return projMatrix;
 }
 

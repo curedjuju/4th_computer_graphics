@@ -19,6 +19,7 @@ public:
     void rotateZ(double alpha);
     void rotate(double phiX, double phiY, double phiZ);
     void scale(double aX, double bY, double cZ);
+    void translate(double dx, double dy, double dz);
     QVector<QVector3D> figure3D();
     QVector<QVector2D> parallelProject();
 private:
@@ -29,6 +30,7 @@ private:
     QGenericMatrix<3, 3, qreal> rotationYMatrix(double phi);
     QGenericMatrix<3, 3, qreal> rotationZMatrix(double phi);
     QGenericMatrix<3, 3, qreal> scaleMatrix(double a, double b, double c);
+    QGenericMatrix<4, 4, qreal> translationMatrix(double dx, double dy, double dz);
     QGenericMatrix<3, 3, qreal> parallelProjectionMatrix();
 };
 

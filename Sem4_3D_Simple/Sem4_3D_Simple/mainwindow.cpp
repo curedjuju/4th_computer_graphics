@@ -54,8 +54,12 @@ void MainWindow::paintBtnClicked(){
     double sX = ui->scaleX->value();
     double sY = ui->scaleY->value();
     double sZ = ui->scaleZ->value();
+    double dx = ui->trX->text().toDouble();
+    double dy = ui->trY->text().toDouble();
+    double dz = ui->trZ->text().toDouble();
     pyramid.rotate(aX, aY, aZ);
     pyramid.scale(sX, sY, sZ);
+    pyramid.translate(dx, dy, dz);
     QVector<QVector2D> fig2d = pyramid.parallelProject();
     QVector2D point1 = fig2d.at(0);
     QVector2D point2 = fig2d.at(1);
