@@ -5,6 +5,8 @@
 #include<QMessageBox>
 #include <QSignalMapper>
 #include <QDebug>
+#include <QGraphicsScene>
+#include <pyramid.h>
 
 namespace Ui {
 class MainWindow;
@@ -21,10 +23,12 @@ public:
 private:
     Ui::MainWindow *ui;
     QSignalMapper *pSignalMapper;
+    QGraphicsScene *scene;
     void createActions();
 
 private slots:
     void aboutMenuItemClicked();
+    void paintBtnClicked();
 };
 
 #endif // MAINWINDOW_H

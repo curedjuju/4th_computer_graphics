@@ -6,20 +6,57 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>743</width>
-    <height>436</height>
+    <width>1003</width>
+    <height>579</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
-  <widget class="QWidget" name="centralWidget"/>
+  <widget class="QWidget" name="centralWidget">
+   <widget class="QGraphicsView" name="graphicsView">
+    <property name="geometry">
+     <rect>
+      <x>0</x>
+      <y>0</y>
+      <width>611</width>
+      <height>561</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QGroupBox" name="groupBox">
+    <property name="geometry">
+     <rect>
+      <x>610</x>
+      <y>0</y>
+      <width>391</width>
+      <height>551</height>
+     </rect>
+    </property>
+    <property name="title">
+     <string>Параметры рисования</string>
+    </property>
+    <widget class="QPushButton" name="paintBtn">
+     <property name="geometry">
+      <rect>
+       <x>150</x>
+       <y>460</y>
+       <width>111</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>Нарисовать</string>
+     </property>
+    </widget>
+   </widget>
+  </widget>
   <widget class="QMenuBar" name="menuBar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>743</width>
+     <width>1003</width>
      <height>22</height>
     </rect>
    </property>

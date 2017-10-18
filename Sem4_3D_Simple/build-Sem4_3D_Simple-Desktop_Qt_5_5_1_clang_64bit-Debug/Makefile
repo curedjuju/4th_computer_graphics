@@ -49,9 +49,11 @@ OBJECTS_DIR   = ./
 ####### Files
 
 SOURCES       = ../Sem4_3D_Simple/main.cpp \
-		../Sem4_3D_Simple/mainwindow.cpp moc_mainwindow.cpp
+		../Sem4_3D_Simple/mainwindow.cpp \
+		../Sem4_3D_Simple/pyramid.cpp moc_mainwindow.cpp
 OBJECTS       = main.o \
 		mainwindow.o \
+		pyramid.o \
 		moc_mainwindow.o
 DIST          = /Applications/Qt/5.5/clang_64/mkspecs/features/spec_pre.prf \
 		/Applications/Qt/5.5/clang_64/mkspecs/qdevice.pri \
@@ -174,6 +176,7 @@ DIST          = /Applications/Qt/5.5/clang_64/mkspecs/features/spec_pre.prf \
 		/Applications/Qt/5.5/clang_64/mkspecs/features/qt_config.prf \
 		/Applications/Qt/5.5/clang_64/mkspecs/macx-clang/qmake.conf \
 		/Applications/Qt/5.5/clang_64/mkspecs/features/spec_post.prf \
+		../Sem4_3D_Simple/.qmake.stash \
 		/Applications/Qt/5.5/clang_64/mkspecs/features/exclusive_builds.prf \
 		/Applications/Qt/5.5/clang_64/mkspecs/features/default_pre.prf \
 		/Applications/Qt/5.5/clang_64/mkspecs/features/mac/default_pre.prf \
@@ -194,8 +197,10 @@ DIST          = /Applications/Qt/5.5/clang_64/mkspecs/features/spec_pre.prf \
 		/Applications/Qt/5.5/clang_64/mkspecs/features/exceptions.prf \
 		/Applications/Qt/5.5/clang_64/mkspecs/features/yacc.prf \
 		/Applications/Qt/5.5/clang_64/mkspecs/features/lex.prf \
-		../Sem4_3D_Simple/Sem4_3D_Simple.pro ../Sem4_3D_Simple/mainwindow.h ../Sem4_3D_Simple/main.cpp \
-		../Sem4_3D_Simple/mainwindow.cpp
+		../Sem4_3D_Simple/Sem4_3D_Simple.pro ../Sem4_3D_Simple/mainwindow.h \
+		../Sem4_3D_Simple/pyramid.h ../Sem4_3D_Simple/main.cpp \
+		../Sem4_3D_Simple/mainwindow.cpp \
+		../Sem4_3D_Simple/pyramid.cpp
 QMAKE_TARGET  = Sem4_3D_Simple
 DESTDIR       = #avoid trailing-slash linebreak
 TARGET        = Sem4_3D_Simple.app/Contents/MacOS/Sem4_3D_Simple
@@ -358,6 +363,7 @@ Makefile: ../Sem4_3D_Simple/Sem4_3D_Simple.pro /Applications/Qt/5.5/clang_64/mks
 		/Applications/Qt/5.5/clang_64/mkspecs/features/qt_config.prf \
 		/Applications/Qt/5.5/clang_64/mkspecs/macx-clang/qmake.conf \
 		/Applications/Qt/5.5/clang_64/mkspecs/features/spec_post.prf \
+		.qmake.stash \
 		/Applications/Qt/5.5/clang_64/mkspecs/features/exclusive_builds.prf \
 		/Applications/Qt/5.5/clang_64/mkspecs/features/default_pre.prf \
 		/Applications/Qt/5.5/clang_64/mkspecs/features/mac/default_pre.prf \
@@ -504,6 +510,7 @@ Makefile: ../Sem4_3D_Simple/Sem4_3D_Simple.pro /Applications/Qt/5.5/clang_64/mks
 /Applications/Qt/5.5/clang_64/mkspecs/features/qt_config.prf:
 /Applications/Qt/5.5/clang_64/mkspecs/macx-clang/qmake.conf:
 /Applications/Qt/5.5/clang_64/mkspecs/features/spec_post.prf:
+.qmake.stash:
 /Applications/Qt/5.5/clang_64/mkspecs/features/exclusive_builds.prf:
 /Applications/Qt/5.5/clang_64/mkspecs/features/default_pre.prf:
 /Applications/Qt/5.5/clang_64/mkspecs/features/mac/default_pre.prf:
@@ -557,8 +564,8 @@ dist: distdir FORCE
 distdir: FORCE
 	@test -d $(DISTDIR) || mkdir -p $(DISTDIR)
 	$(COPY_FILE) --parents $(DIST) $(DISTDIR)/
-	$(COPY_FILE) --parents ../Sem4_3D_Simple/mainwindow.h $(DISTDIR)/
-	$(COPY_FILE) --parents ../Sem4_3D_Simple/main.cpp ../Sem4_3D_Simple/mainwindow.cpp $(DISTDIR)/
+	$(COPY_FILE) --parents ../Sem4_3D_Simple/mainwindow.h ../Sem4_3D_Simple/pyramid.h $(DISTDIR)/
+	$(COPY_FILE) --parents ../Sem4_3D_Simple/main.cpp ../Sem4_3D_Simple/mainwindow.cpp ../Sem4_3D_Simple/pyramid.cpp $(DISTDIR)/
 	$(COPY_FILE) --parents ../Sem4_3D_Simple/mainwindow.ui $(DISTDIR)/
 
 
@@ -590,6 +597,23 @@ compiler_moc_header_clean:
 	-$(DEL_FILE) moc_mainwindow.cpp
 moc_mainwindow.cpp: /Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMessageBox \
+		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmessagebox.h \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QSignalMapper \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsignalmapper.h \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QDebug \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QGraphicsScene \
+		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
+		../Sem4_3D_Simple/pyramid.h \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QVector \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/qvector.h \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/QVector3D \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/qvector3d.h \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/QVector2D \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/qvector2d.h \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/QGenericMatrix \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/qgenericmatrix.h \
 		../Sem4_3D_Simple/mainwindow.h
 	/Applications/Qt/5.5/clang_64/bin/moc $(DEFINES) -D__APPLE__ -D__GNUC__=4 -D__APPLE_CC__ -I/Applications/Qt/5.5/clang_64/mkspecs/macx-clang -I'/Users/egdeveloper/Documents/EducationProjects/4th Year/Computer Graphics/Sem4_3D_Simple/Sem4_3D_Simple' -I/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers -I/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers -I/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers -I. -F/Applications/Qt/5.5/clang_64/lib ../Sem4_3D_Simple/mainwindow.h -o moc_mainwindow.cpp
 
@@ -616,6 +640,23 @@ compiler_clean: compiler_moc_header_clean compiler_uic_clean
 main.o: ../Sem4_3D_Simple/main.cpp ../Sem4_3D_Simple/mainwindow.h \
 		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMessageBox \
+		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmessagebox.h \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QSignalMapper \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsignalmapper.h \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QDebug \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QGraphicsScene \
+		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
+		../Sem4_3D_Simple/pyramid.h \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QVector \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/qvector.h \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/QVector3D \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/qvector3d.h \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/QVector2D \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/qvector2d.h \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/QGenericMatrix \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/qgenericmatrix.h \
 		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QApplication \
 		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qapplication.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o main.o ../Sem4_3D_Simple/main.cpp
@@ -623,8 +664,36 @@ main.o: ../Sem4_3D_Simple/main.cpp ../Sem4_3D_Simple/mainwindow.h \
 mainwindow.o: ../Sem4_3D_Simple/mainwindow.cpp ../Sem4_3D_Simple/mainwindow.h \
 		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMainWindow \
 		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmainwindow.h \
+		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QMessageBox \
+		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qmessagebox.h \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QSignalMapper \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/qsignalmapper.h \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QDebug \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/qdebug.h \
+		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/QGraphicsScene \
+		/Applications/Qt/5.5/clang_64/lib/QtWidgets.framework/Headers/qgraphicsscene.h \
+		../Sem4_3D_Simple/pyramid.h \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QVector \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/qvector.h \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/QVector3D \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/qvector3d.h \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/QVector2D \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/qvector2d.h \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/QGenericMatrix \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/qgenericmatrix.h \
 		ui_mainwindow.h
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o mainwindow.o ../Sem4_3D_Simple/mainwindow.cpp
+
+pyramid.o: ../Sem4_3D_Simple/pyramid.cpp ../Sem4_3D_Simple/pyramid.h \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/QVector \
+		/Applications/Qt/5.5/clang_64/lib/QtCore.framework/Headers/qvector.h \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/QVector3D \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/qvector3d.h \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/QVector2D \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/qvector2d.h \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/QGenericMatrix \
+		/Applications/Qt/5.5/clang_64/lib/QtGui.framework/Headers/qgenericmatrix.h
+	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o pyramid.o ../Sem4_3D_Simple/pyramid.cpp
 
 moc_mainwindow.o: moc_mainwindow.cpp 
 	$(CXX) -c $(CXXFLAGS) $(INCPATH) -o moc_mainwindow.o moc_mainwindow.cpp

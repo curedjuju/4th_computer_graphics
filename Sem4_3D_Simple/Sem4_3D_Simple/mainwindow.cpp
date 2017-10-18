@@ -7,12 +7,15 @@ MainWindow::MainWindow(QWidget *parent) :
 {
     ui->setupUi(this);
     ui->menuBar->setNativeMenuBar(false);
+    this->scene = new QGraphicsScene(ui->graphicsView);
+    ui->graphicsView->setScene(scene);
     createActions();
 }
 
 void MainWindow::createActions(){
     pSignalMapper = new QSignalMapper(this);
     connect(ui->actionAbout, SIGNAL(triggered(bool)), this, SLOT(aboutMenuItemClicked()));
+    connect(ui->paintBtn, SIGNAL(clicked(bool)), this, SLOT(paintBtnClicked()));
 }
 
 void MainWindow::aboutMenuItemClicked(){
@@ -23,7 +26,47 @@ void MainWindow::aboutMenuItemClicked(){
     msgBox.exec();
 }
 
+void MainWindow::paintBtnClicked(){
+    QPen pen(Qt::green);
+    QPen vPen(Qt::black);
+    QVector<QVector3D> v;
+    //Hardcode vectors
+    //1 v high
+    v.push_back(QVector3D(50, 20, 0));
+    //2 v
+    v.push_back(QVector3D(100, 0, 0));
+    //3 v
+    v.push_back(QVector3D(0, 0, 0));
+    //4 v
+    v.push_back(QVector3D(50, 0, 20));
+    QVector2D c(ui->graphicsView->width() / 2, ui->graphicsView->height() / 2);
+    //X axes
+    this->scene->addLine(0, ui->graphicsView->height() / 2, ui->graphicsView->width(), ui->graphicsView->height() / 2, pen);
+    //Y axex
+    this->scene->addLine(ui->graphicsView->width() / 2, 0, ui->graphicsView->width() / 2, ui->graphicsView->height(), pen);
+
+    Pyramid pyramid(v);
+    QVector<QVector2D> fig2d = pyramid.parallelProject();
+    QVector2D point1 = fig2d.at(0);
+    QVector2D point2 = fig2d.at(1);
+    QVector2D point3 = fig2d.at(2);
+    QVector2D point4 = fig2d.at(3);
+    //Draw 1 side 1-2
+    this->scene->addLine(point1.x() + c.x(), c.y() - point1.y(), point2.x() + c.x(), c.y() - point2.y(), vPen);
+    //Draw 2 side 1-3
+    this->scene->addLine(point1.x() + c.x(), c.y() - point1.y(), point3.x() + c.x(), c.y() - point3.y(), vPen);
+    //Draw 2 side 1-4
+    this->scene->addLine(point1.x() + c.x(), c.y() - point1.y(), point4.x() + c.x(), c.y() - point4.y(), vPen);
+    //Draw bottom 2-3
+    this->scene->addLine(point2.x() + c.x(), c.y() - point2.y(), point3.x() + c.x(), c.y() - point3.y(), vPen);
+    //Draw bottom 3-4
+    this->scene->addLine(point3.x() + c.x(), c.y() - point3.y(), point4.x() + c.x(), c.y() - point4.y(), vPen);
+    //Draw bottom 4-2
+    this->scene->addLine(point4.x() + c.x(), c.y() - point4.y(), point2.x() + c.x(), c.y() - point2.y(), vPen);
+}
+
 MainWindow::~MainWindow()
 {
+    delete this->scene;
     delete ui;
 }
