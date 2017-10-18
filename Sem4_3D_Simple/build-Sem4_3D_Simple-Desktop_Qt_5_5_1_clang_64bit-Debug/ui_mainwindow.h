@@ -66,6 +66,12 @@ public:
     QSlider *rotateX;
     QSlider *rotateY;
     QSlider *rotateZ;
+    QLabel *label_16;
+    QSlider *scaleX;
+    QLabel *label_17;
+    QSlider *scaleY;
+    QLabel *label_18;
+    QSlider *scaleZ;
     QMenuBar *menuBar;
     QMenu *menuProgram;
     QStatusBar *statusBar;
@@ -74,20 +80,20 @@ public:
     {
         if (MainWindow->objectName().isEmpty())
             MainWindow->setObjectName(QStringLiteral("MainWindow"));
-        MainWindow->resize(1003, 579);
+        MainWindow->resize(1003, 631);
         actionAbout = new QAction(MainWindow);
         actionAbout->setObjectName(QStringLiteral("actionAbout"));
         centralWidget = new QWidget(MainWindow);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         graphicsView = new QGraphicsView(centralWidget);
         graphicsView->setObjectName(QStringLiteral("graphicsView"));
-        graphicsView->setGeometry(QRect(0, 0, 611, 561));
+        graphicsView->setGeometry(QRect(0, 0, 611, 591));
         groupBox = new QGroupBox(centralWidget);
         groupBox->setObjectName(QStringLiteral("groupBox"));
-        groupBox->setGeometry(QRect(610, 0, 391, 551));
+        groupBox->setGeometry(QRect(610, 0, 391, 591));
         paintBtn = new QPushButton(groupBox);
         paintBtn->setObjectName(QStringLiteral("paintBtn"));
-        paintBtn->setGeometry(QRect(150, 490, 111, 31));
+        paintBtn->setGeometry(QRect(140, 540, 111, 31));
         label = new QLabel(groupBox);
         label->setObjectName(QStringLiteral("label"));
         label->setGeometry(QRect(30, 50, 61, 16));
@@ -182,6 +188,33 @@ public:
         rotateZ->setObjectName(QStringLiteral("rotateZ"));
         rotateZ->setGeometry(QRect(110, 380, 160, 16));
         rotateZ->setOrientation(Qt::Horizontal);
+        label_16 = new QLabel(groupBox);
+        label_16->setObjectName(QStringLiteral("label_16"));
+        label_16->setGeometry(QRect(30, 410, 91, 16));
+        scaleX = new QSlider(groupBox);
+        scaleX->setObjectName(QStringLiteral("scaleX"));
+        scaleX->setGeometry(QRect(130, 410, 160, 16));
+        scaleX->setMinimum(1);
+        scaleX->setMaximum(100);
+        scaleX->setOrientation(Qt::Horizontal);
+        label_17 = new QLabel(groupBox);
+        label_17->setObjectName(QStringLiteral("label_17"));
+        label_17->setGeometry(QRect(30, 440, 91, 16));
+        scaleY = new QSlider(groupBox);
+        scaleY->setObjectName(QStringLiteral("scaleY"));
+        scaleY->setGeometry(QRect(130, 440, 160, 16));
+        scaleY->setMinimum(1);
+        scaleY->setMaximum(100);
+        scaleY->setOrientation(Qt::Horizontal);
+        label_18 = new QLabel(groupBox);
+        label_18->setObjectName(QStringLiteral("label_18"));
+        label_18->setGeometry(QRect(30, 470, 91, 16));
+        scaleZ = new QSlider(groupBox);
+        scaleZ->setObjectName(QStringLiteral("scaleZ"));
+        scaleZ->setGeometry(QRect(130, 470, 160, 16));
+        scaleZ->setMinimum(1);
+        scaleZ->setMaximum(100);
+        scaleZ->setOrientation(Qt::Horizontal);
         MainWindow->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(MainWindow);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -223,6 +256,9 @@ public:
         label_13->setText(QApplication::translate("MainWindow", "\320\237\320\276\320\262\320\276\321\200\320\276\321\202 x", 0));
         label_14->setText(QApplication::translate("MainWindow", "\320\237\320\276\320\262\320\276\321\200\320\276\321\202 y", 0));
         label_15->setText(QApplication::translate("MainWindow", "\320\237\320\276\320\262\320\276\321\200\320\276\321\202 z", 0));
+        label_16->setText(QApplication::translate("MainWindow", "\320\240\320\260\321\201\321\202\321\217\320\266\320\265\320\275\320\270\320\265 x", 0));
+        label_17->setText(QApplication::translate("MainWindow", "\320\240\320\260\321\201\321\202\321\217\320\266\320\265\320\275\320\270\320\265 y", 0));
+        label_18->setText(QApplication::translate("MainWindow", "\320\240\320\260\321\201\321\202\321\217\320\266\320\265\320\275\320\270\320\265 z", 0));
         menuProgram->setTitle(QApplication::translate("MainWindow", "Program", 0));
     } // retranslateUi
 

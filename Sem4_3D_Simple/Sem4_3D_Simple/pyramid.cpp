@@ -28,6 +28,27 @@ void Pyramid::rotate(double aX, double aY, double aZ){
     rotateZ(aZ);
 }
 
+void Pyramid::scale(double a, double b, double c){
+    matrix = scaleMatrix(a, b, c) * matrix;
+}
+
+QGenericMatrix<3, 3, qreal> Pyramid::scaleMatrix(double a, double b, double c){
+    QGenericMatrix<3, 3, qreal> projMatrix;
+    //first row x
+    projMatrix(0, 0) = a;
+    projMatrix(1, 0) = 0;
+    projMatrix(2, 0) = 0;
+    //second row y
+    projMatrix(0, 1) = 0;
+    projMatrix(1, 1) = b;
+    projMatrix(2, 1) = 0;
+    //third row z - drop
+    projMatrix(0, 2) = 0;
+    projMatrix(1, 2) = 0;
+    projMatrix(2, 2) = c;
+    return projMatrix;
+}
+
 QVector<QVector2D> Pyramid::parallelProject(){
     QGenericMatrix<3, 3, qreal> proj = parallelProjectionMatrix();
     QGenericMatrix<4, 3, qreal> projectedFigure = proj * matrix;
