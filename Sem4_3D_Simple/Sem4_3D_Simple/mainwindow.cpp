@@ -32,15 +32,14 @@ void MainWindow::paintBtnClicked(){
     QPen pen(Qt::green);
     QPen vPen(Qt::black);
     QVector<QVector3D> v;
-    //Hardcode vectors
     //1 v high
-    v.push_back(QVector3D(50, 20, 0));
+    v.push_back(QVector3D(ui->x1->text().toDouble(), ui->y1->text().toDouble(), ui->z1->text().toDouble()));
     //2 v
-    v.push_back(QVector3D(100, 0, 0));
+    v.push_back(QVector3D(ui->x2->text().toDouble(), ui->y2->text().toDouble(), ui->z2->text().toDouble()));
     //3 v
-    v.push_back(QVector3D(0, 0, 0));
+    v.push_back(QVector3D(ui->x3->text().toDouble(), ui->y3->text().toDouble(), ui->z3->text().toDouble()));
     //4 v
-    v.push_back(QVector3D(50, 0, 20));
+    v.push_back(QVector3D(ui->x4->text().toDouble(), ui->y4->text().toDouble(), ui->z4->text().toDouble()));
     QVector2D c(ui->graphicsView->width() / 2, ui->graphicsView->height() / 2);
     //X axes
     this->scene->addLine(0, ui->graphicsView->height() / 2, ui->graphicsView->width(), ui->graphicsView->height() / 2, pen);
